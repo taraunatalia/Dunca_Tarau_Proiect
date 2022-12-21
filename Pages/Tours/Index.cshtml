@@ -1,0 +1,93 @@
+﻿@page
+@model Dunca_Tarau_Proiect.Pages.Tours.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].GroupSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].StartingTourDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].Country.CountryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tour[0].TourCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+          @foreach (var item in Model.TourD.Tours) {
+               string selectedRow = "";
+               if (item.ID == Model.TourID)
+                  {
+                  selectedRow = "table-success";
+                  }
+
+       <tr class="@selectedRow">    
+    
+         
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartingTourDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country.CountryName)
+                </td>
+                <td>
+                        @{
+                            foreach (var category in item.TourCategories)
+                            {
+                                @category.Category.ID @: @category.Category.CategoryName <br />
+                            }
+                        }
+                </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

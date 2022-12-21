@@ -1,0 +1,93 @@
+﻿@page
+@model Dunca_Tarau_Proiect.Pages.Tours.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tour</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Tour.ID" />
+            <div class="form-group">
+                <label asp-for="Tour.Name" class="control-label"></label>
+                <input asp-for="Tour.Name" class="form-control" />
+                <span asp-validation-for="Tour.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Location" class="control-label"></label>
+                <input asp-for="Tour.Location" class="form-control" />
+                <span asp-validation-for="Tour.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.GroupSize" class="control-label"></label>
+                <input asp-for="Tour.GroupSize" class="form-control" />
+                <span asp-validation-for="Tour.GroupSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Time" class="control-label"></label>
+                <input asp-for="Tour.Time" class="form-control" />
+                <span asp-validation-for="Tour.Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Price" class="control-label"></label>
+                <input asp-for="Tour.Price" class="form-control" />
+                <span asp-validation-for="Tour.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.StartingTourDate" class="control-label"></label>
+                <input asp-for="Tour.StartingTourDate" class="form-control" />
+                <span asp-validation-for="Tour.StartingTourDate" class="textdanger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.CountryID" class="control-label">Country Name</label>
+                <select asp-for="Tour.CountryID" class="form-control" asp-items="ViewBag.CountryID">
+                </select>
+                <span asp-validation-for="Tour.CountryID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                   <div class="table">
+                      <table>
+                        <tr>
+                          @{
+                            int cnt = 0;
+                            foreach (var cat in Model.AssignedCategoryDataList)
+                            {
+                              if (cnt++ % 3 == 0)
+                              {
+                               @:</tr><tr>
+                              }
+                            @:<td>
+                            <input type="checkbox"
+                              name="selectedCategories"
+                              value="@cat.CategoryID"
+                              @(Html.Raw(cat.Assigned ?
+                              "checked=\"checked\"" : "")) />
+                            @cat.CategoryID @: @cat.Name
+                          @:</td>
+                          }
+                        @:</tr>
+                        }
+                      </table>
+                   </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
