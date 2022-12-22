@@ -35,9 +35,17 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
             {
                 return NotFound();
             }
+
+            var tourList = _context.Tour
+          .Select(x => new
+          {
+              x.ID,
+              TourFullName = x.Name
+          });
+
             Borrowing = borrowing;
-           ViewData["TourID"] = new SelectList(_context.Tour, "ID", "ID");
-           ViewData["MemberID"] = new SelectList(_context.Member, "ID", "ID");
+           ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
+           ViewData["TourID"] = new SelectList(_context.Tour, "ID", "TourFullName");
             return Page();
         }
 

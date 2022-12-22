@@ -21,17 +21,15 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
 
         public IActionResult OnGet()
         {
-
             var tourList = _context.Tour
-             .Select(x => new
-             {
-              x.ID,
-              BookFullName = x.Name
-             });
+              .Select(x => new
+                {x.ID,
+                 TourFullName = x.Name
+        });
 
 
-            ViewData["TourID"] = new SelectList(tourList, "ID", "TourFullName");
-            ViewData["MemberID"] = new SelectList(_context.Member, "ID", "FullName");
+        ViewData["MemberID"] = new SelectList(tourList, "ID", "BookFullName");
+        ViewData["TourID"] = new SelectList(_context.Tour, "ID", "FullName");
             return Page();
         }
 

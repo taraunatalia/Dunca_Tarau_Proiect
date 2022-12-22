@@ -28,7 +28,11 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+            var borrowing = await _context.Borrowing
+              .Include(b => b.Member)
+              .Include(b => b.Tour)
+              .FirstOrDefaultAsync(m => m.ID == id);
+
             if (borrowing == null)
             {
                 return NotFound();
@@ -39,5 +43,22 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
             }
             return Page();
         }
-    }
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null || _context.Borrowing == null)
+            {
+                return NotFound();
+            }
+            var borrowing = await _context.Borrowing.FindAsync(id);
+
+            if (borrowing != null)
+            {
+                Borrowing = borrowing;
+                _context.Borrowing.Remove(Borrowing);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
+        }
+        }
 }

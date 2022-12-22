@@ -8,7 +8,7 @@ namespace Dunca_Tarau_Proiect.Models
         public int? MemberID { get; set; }
         public Member? Member { get; set; }
         public int? TourID { get; set; }
-        public Tour? Book { get; set; }
+        public Tour? Tour { get; set; }
         [DataType(DataType.Date)]
         public DateTime FinishingTourDate { get; set; }
     }

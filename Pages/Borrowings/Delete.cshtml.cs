@@ -29,7 +29,10 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
                 return NotFound();
             }
 
-            var borrowing = await _context.Borrowing.FirstOrDefaultAsync(m => m.ID == id);
+            var borrowing = await _context.Borrowing
+              .Include(b => b.Member)
+              .Include(b => b.Tour)
+              .FirstOrDefaultAsync(m => m.ID == id);
 
             if (borrowing == null)
             {
@@ -48,6 +51,7 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
             {
                 return NotFound();
             }
+
             var borrowing = await _context.Borrowing.FindAsync(id);
 
             if (borrowing != null)

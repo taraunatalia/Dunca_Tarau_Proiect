@@ -26,8 +26,8 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
             if (_context.Borrowing != null)
             {
                 Borrowing = await _context.Borrowing
-                .Include(b => b.Book)
-                .Include(b => b.Member).ToListAsync();
+                .Include(b => b.Member)
+                .Include(b => b.Tour).ToListAsync();
             }
         }
     }

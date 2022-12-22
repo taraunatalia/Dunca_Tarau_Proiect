@@ -22,6 +22,32 @@ namespace Dunca_Tarau_Proiect.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Borrowing", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<DateTime>("FinishingTourDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MemberID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TourID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MemberID");
+
+                    b.HasIndex("TourID");
+
+                    b.ToTable("Borrowing");
+                });
+
             modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Category", b =>
                 {
                     b.Property<int>("ID")
@@ -54,6 +80,35 @@ namespace Dunca_Tarau_Proiect.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Member", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Member");
                 });
 
             modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Tour", b =>
@@ -119,6 +174,21 @@ namespace Dunca_Tarau_Proiect.Migrations
                     b.ToTable("TourCategory");
                 });
 
+            modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Borrowing", b =>
+                {
+                    b.HasOne("Dunca_Tarau_Proiect.Models.Member", "Member")
+                        .WithMany("Borrowings")
+                        .HasForeignKey("MemberID");
+
+                    b.HasOne("Dunca_Tarau_Proiect.Models.Tour", "Tour")
+                        .WithMany()
+                        .HasForeignKey("TourID");
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Tour");
+                });
+
             modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Tour", b =>
                 {
                     b.HasOne("Dunca_Tarau_Proiect.Models.Country", "Country")
@@ -155,6 +225,11 @@ namespace Dunca_Tarau_Proiect.Migrations
             modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Country", b =>
                 {
                     b.Navigation("Tours");
+                });
+
+            modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Member", b =>
+                {
+                    b.Navigation("Borrowings");
                 });
 
             modelBuilder.Entity("Dunca_Tarau_Proiect.Models.Tour", b =>
