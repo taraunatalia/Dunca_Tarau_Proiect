@@ -1,4 +1,5 @@
-﻿@page
+﻿@page "{id:int?}"
+
 @model Dunca_Tarau_Proiect.Pages.Countries.IndexModel
 
 @{
@@ -20,12 +21,19 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Country) {
-        <tr>
+        @foreach (var item in Model.CountryData.Countries)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CountryID)
+            {
+                selectedRow = "table-success";
+            }
+     <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.CountryName)
             </td>
             <td>
+                <a asp-page="./Index" asp-route-id="@item.ID">Select</a> |
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
@@ -34,3 +42,32 @@
 }
     </tbody>
 </table>
+@if (Model.CountryData.Tours != null)
+{
+    <h3>Tour Edited by Selected Country</h3>
+    <table class="table">
+
+        @foreach (var item in Model.CountryData.Countries)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.CountryID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @{
+                        foreach (var b in item.Tours)
+                        {
+
+                            @b.Name 
+
+                            <br />
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

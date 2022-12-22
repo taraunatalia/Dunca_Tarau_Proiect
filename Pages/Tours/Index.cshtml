@@ -10,6 +10,18 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Tour GroupSize / Time Name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -20,10 +32,14 @@
                 @Html.DisplayNameFor(model => model.Tour[0].Location)
             </th>
             <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.GroupSizeSort">
                 @Html.DisplayNameFor(model => model.Tour[0].GroupSize)
+                </a>
             </th>
             <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TimeSort">
                 @Html.DisplayNameFor(model => model.Tour[0].Time)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tour[0].Price)

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Dunca_Tarau_Proiect.Data;
 using Dunca_Tarau_Proiect.Models;
+using Dunca_Tarau_Proiect.Models.ViewModels;
+using System.Security.Policy;
 
 namespace Dunca_Tarau_Proiect.Pages.Countries
 {
@@ -21,12 +23,25 @@ namespace Dunca_Tarau_Proiect.Pages.Countries
 
         public IList<Country> Country { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public CountryIndexData CountryData { get; set; }
+        public int CountryID { get; set; }
+        public int TourID { get; set; }
+
+        public async Task OnGetAsync(int? id, int? tourID)
         {
-            if (_context.Country != null)
+            CountryData = new CountryIndexData();
+            CountryData.Countries = await _context.Country
+            .Include(i => i.Tours)
+            .OrderBy(i => i.CountryName)
+            .ToListAsync();
+            if (id != null)
             {
-                Country = await _context.Country.ToListAsync();
+                CountryID = id.Value;
+                Country country = CountryData.Countries
+                .Where(i => i.ID == id.Value).Single();
+                CountryData.Tours = country.Tours;
             }
+
         }
     }
 }
