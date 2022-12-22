@@ -6,7 +6,12 @@ using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Tours");
+    options.Conventions.AllowAnonymousToPage("/Tours/Index");
+    options.Conventions.AllowAnonymousToPage("/Tours/Details");
+});
 builder.Services.AddDbContext<Dunca_Tarau_ProiectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Dunca_Tarau_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Dunca_Tarau_ProiectContext' not found.")));
 
@@ -15,7 +20,8 @@ builder.Services.AddDbContext<LibraryIdentityContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Dunca_Tarau_ProiectContext") ?? throw new InvalidOperationException("Connectionstring 'Dunca_Tarau_ProiectContext' not found.")));
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 options.SignIn.RequireConfirmedAccount = true)
- .AddEntityFrameworkStores<LibraryIdentityContext>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<LibraryIdentityContext>();
 
 
 var app = builder.Build();
