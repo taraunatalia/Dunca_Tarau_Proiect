@@ -29,7 +29,6 @@ namespace Dunca_Tarau_Proiect.Pages.Tours
 
         public string GroupSizeSort { get; set; }
         public string TimeSort { get; set; }
-
         public string CurrentFilter { get; set; }
 
 
