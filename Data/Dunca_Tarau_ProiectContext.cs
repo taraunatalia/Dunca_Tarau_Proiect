@@ -19,5 +19,9 @@ namespace Dunca_Tarau_Proiect.Data
         public DbSet<Dunca_Tarau_Proiect.Models.Country> Country { get; set; }
 
         public DbSet<Dunca_Tarau_Proiect.Models.Category> Category { get; set; }
+
+        public DbSet<Dunca_Tarau_Proiect.Models.Member> Member { get; set; }
+
+        public DbSet<Dunca_Tarau_Proiect.Models.Borrowing> Borrowing { get; set; }
     }
 }
