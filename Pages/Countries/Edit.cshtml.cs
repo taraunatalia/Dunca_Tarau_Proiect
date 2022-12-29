@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Dunca_Tarau_Proiect.Data;
 using Dunca_Tarau_Proiect.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dunca_Tarau_Proiect.Pages.Countries
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly Dunca_Tarau_Proiect.Data.Dunca_Tarau_ProiectContext _context;

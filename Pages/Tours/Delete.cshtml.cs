@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Dunca_Tarau_Proiect.Data;
 using Dunca_Tarau_Proiect.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dunca_Tarau_Proiect.Pages.Tours
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly Dunca_Tarau_Proiect.Data.Dunca_Tarau_ProiectContext _context;

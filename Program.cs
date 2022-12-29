@@ -5,12 +5,19 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy =>
+   policy.RequireRole("Admin"));
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Tours");
     options.Conventions.AllowAnonymousToPage("/Tours/Index");
     options.Conventions.AllowAnonymousToPage("/Tours/Details");
+    options.Conventions.AuthorizeFolder("/Members", "AdminPolicy");
 });
 builder.Services.AddDbContext<Dunca_Tarau_ProiectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Dunca_Tarau_ProiectContext") ?? throw new InvalidOperationException("Connection string 'Dunca_Tarau_ProiectContext' not found.")));

@@ -12,9 +12,12 @@ using System.Security.Policy;
 using Dunca_Tarau_Proiect.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Dunca_Tarau_Proiect.Pages.Tours
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : TourCategoriesPageModel
     {
         private readonly Dunca_Tarau_Proiect.Data.Dunca_Tarau_ProiectContext _context;
