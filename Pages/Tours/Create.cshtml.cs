@@ -45,24 +45,23 @@ namespace Dunca_Tarau_Proiect.Pages.Tours
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
          public async Task<IActionResult> OnPostAsync(string[] selectedCategories)
         {
-          var newTour = new Tour();
-        if (selectedCategories != null)
-        {
-          newTour.TourCategories = new List<TourCategory>();
-        foreach (var cat in selectedCategories)
-        {
-          var catToAdd = new TourCategory
-        {
-          CategoryID = int.Parse(cat)
-        };
-        newTour.TourCategories.Add(catToAdd);
-        }
-        }
-        //Tour.TourCategories = newTour.TourCategories;
-        _context.Tour.Add(newTour);
-        await _context.SaveChangesAsync();
-        return RedirectToPage("./Index");
-            PopulateAssignedCategoryData(_context, newTour);
+            if (selectedCategories != null)
+            {
+                Tour.TourCategories = new List<TourCategory>();
+                foreach (var cat in selectedCategories)
+                {
+                    var catToAdd = new TourCategory
+                    {
+                        CategoryID = int.Parse(cat)
+                    };
+                    Tour.TourCategories.Add(catToAdd);
+                }
+            }
+            //Tour.TourCategories = newTour.TourCategories;
+            _context.Tour.Add(Tour);
+            await _context.SaveChangesAsync();
+            return RedirectToPage("./Index");
+            PopulateAssignedCategoryData(_context, Tour);
             return Page();
 
         }

@@ -14,6 +14,10 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
     {
         private readonly Dunca_Tarau_Proiect.Data.Dunca_Tarau_ProiectContext _context;
 
+        public List<SelectListItem> Tours { get; set; }
+        
+        public List<SelectListItem> Members { get; set; }
+
         public CreateModel(Dunca_Tarau_Proiect.Data.Dunca_Tarau_ProiectContext context)
         {
             _context = context;
@@ -21,15 +25,12 @@ namespace Dunca_Tarau_Proiect.Pages.Borrowings
 
         public IActionResult OnGet()
         {
-            var tourList = _context.Tour
-              .Select(x => new
-                {x.ID,
-                 TourFullName = x.Name
-        });
+            var tours = _context.Tour.ToList();
+            var members = _context.Member.ToList();
 
-
-        ViewData["MemberID"] = new SelectList(tourList, "ID", "BookFullName");
-        ViewData["TourID"] = new SelectList(_context.Tour, "ID", "FullName");
+            Tours = tours.Select(t => new SelectListItem(t.Name, t.ID.ToString())).ToList();
+            Members = members.Select(m => new SelectListItem(m.FullName, m.ID.ToString())).ToList();
+            
             return Page();
         }
 
